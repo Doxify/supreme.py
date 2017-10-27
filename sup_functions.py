@@ -27,8 +27,7 @@ def get_release_info():
     logger('info','Release date:' + str(release_date))
     logger('info', 'Last mobile api update:' + str(last_update))
 
-#Returning information needed for checkout when you input
-#a keyword, size, category, and color.
+#Returning information needed for checkout when you input a keyword, size, category, and color.
 def get_item_info(keyword, category, color, size):
     session(mobile_stock_url)
     response = urllib2.urlopen(session.request).read()
@@ -42,8 +41,7 @@ def get_item_info(keyword, category, color, size):
             name = x['name']
             item_id = x['id']
             
-            #This gets more specific details needed for checkout, supreme has different
-            #ids for every color and size
+            #This gets more specific details needed for checkout, supreme has different ids for every color and size
             if item_id != '':
                 session('https://www.supremenewyork.com/shop/' + str(item_id) + '.json')
                 response = urllib2.urlopen(session.request).read()
@@ -51,13 +49,11 @@ def get_item_info(keyword, category, color, size):
                 
                 #Going through all the variants
                 for x in response_json['styles']:
-                    #Checking if the color the user submitted is there, if it is
-                    #it gets the style id
+                    #Checking if the color the user submitted is there, if it is it gets the style id
                     if x['name'] == color:
                         style_id = x['id']
                         
-                        #Checking if the size the user submitted is there, if it is
-                        #it gets the size id
+                        #Checking if the size the user submitted is there, if it is it gets the size id
                         for x in x['sizes']:
                             if x['name'] == size:
                                 size_id = x['id']
